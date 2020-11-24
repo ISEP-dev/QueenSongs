@@ -2,9 +2,6 @@ import React from 'react';
 import './songlist.css';
 
 class SongList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
 
     render() {
         if (!this.props.selectedSongs.length) {
