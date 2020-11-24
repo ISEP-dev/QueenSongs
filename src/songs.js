@@ -1,4 +1,4 @@
-export const allSongs = [
+const allSongs = [
   "'39",
   'A Dozen Red Roses For My Darling',
   'A Human Body',
