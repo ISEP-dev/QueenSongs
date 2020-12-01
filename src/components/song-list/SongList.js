@@ -1,5 +1,6 @@
 import React from 'react';
 import './songlist.css';
+import PropTypes from 'prop-types'
 
 const SongList = ({selectedSongs, handleSelectedSong}) => (
     !selectedSongs.length
