@@ -3,10 +3,16 @@ import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
 
-const callApiAsync = async (searchSong, setAutocompleteSongs) => {
-    const response = await fetch(`http://localhost:8081/${searchSong}`).then(res => res.json());
-    console.log(response.songs);
-    setAutocompleteSongs(response.songs);
+const callApiAsync = async (searchSong, selectedSongs, setAutocompleteSongs) => {
+    try {
+        const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => res.json());
+        setAutocompleteSongs(songs.map(song => ({
+            name: song,
+            isSelected: !!selectedSongs.find(s => s.name === song)
+        })));
+    } catch (e) {
+        alert("Sorry but we didn't found this music.");
+    }
 }
 
 const App = () => {
@@ -15,20 +21,20 @@ const App = () => {
     const [selectedSongs, setSelectedSongs] = useState([])
 
     useEffect(() => {
-        callApiAsync(searchSong, setAutocompleteSongs);
-    }, [searchSong])
+        if (!!searchSong) {
+            callApiAsync(searchSong, selectedSongs, setAutocompleteSongs);
+        }
+    }, [searchSong, selectedSongs])
 
-    const handleSearchInputChange = (e) => {
-        setSearchSong(e.target.value)
-    }
+    const handleSearchInputChange = (e) => setSearchSong(e.target.value)
 
-    const handleSelectedSong = (selectedSong) => {
-        const autocompleteSongsUpdated = autocompleteSongs.map(s => ({
-            name: s.name,
-            isSelected: selectedSong.name === s.name ? !s.isSelected : s.isSelected
-        }))
-        setAutocompleteSongs(autocompleteSongsUpdated)
-        setSelectedSongs(autocompleteSongsUpdated.filter(s => s.isSelected))
+    const handleSelectedSong = (songSelected) => {
+        const isAlreadySelected = !!selectedSongs.find(s => s.name === songSelected.name);
+        const songSelectedToUpdate = isAlreadySelected
+            ? selectedSongs.filter(s => s.name !== songSelected.name)
+            : [songSelected, ...selectedSongs];
+
+        setSelectedSongs(songSelectedToUpdate);
     }
 
     return (
