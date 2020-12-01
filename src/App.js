@@ -5,13 +5,17 @@ import SongList from "./components/song-list/SongList";
 
 const callApiAsync = async (searchSong, selectedSongs, setAutocompleteSongs) => {
     try {
-        const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => res.json());
+        const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => {
+            if (res.ok) return res.json();
+            throw new Error(res.status.toString());
+        });
+
         setAutocompleteSongs(songs.map(song => ({
             name: song,
             isSelected: !!selectedSongs.find(s => s.name === song)
         })));
     } catch (e) {
-        alert("Sorry but we didn't found this music.");
+        alert(e);
     }
 }
 
