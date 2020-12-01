@@ -3,32 +3,37 @@ import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
 
-const callApiAsync = async (searchSong, selectedSongs, setAutocompleteSongs) => {
+const callApiAsync = async (searchSong, setSongsFound) => {
     try {
         const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => {
             if (res.ok) return res.json();
             throw new Error(res.status.toString());
         });
 
-        setAutocompleteSongs(songs.map(song => ({
-            name: song,
-            isSelected: !!selectedSongs.find(s => s.name === song)
-        })));
+        setSongsFound(songs);
     } catch (e) {
         alert(e);
     }
 }
 
 const App = () => {
+    const [songsFound, setSongsFound] = useState([]);
     const [searchSong, setSearchSong] = useState('')
     const [autocompleteSongs, setAutocompleteSongs] = useState([])
     const [selectedSongs, setSelectedSongs] = useState([])
 
     useEffect(() => {
         if (!!searchSong) {
-            callApiAsync(searchSong, selectedSongs, setAutocompleteSongs);
+            callApiAsync(searchSong, setSongsFound);
         }
-    }, [searchSong, selectedSongs])
+    }, [searchSong])
+
+    useEffect(() => {
+        setAutocompleteSongs(songsFound.map(song => ({
+            name: song,
+            isSelected: !!selectedSongs.find(s => s.name === song)
+        })));
+    }, [songsFound, selectedSongs])
 
     const handleSearchInputChange = (e) => setSearchSong(e.target.value)
 
