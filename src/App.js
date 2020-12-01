@@ -2,30 +2,24 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
-import {allSongs} from "./songs";
 
-const callApiAsync = async (searchSong, setSongs) => {
-    const response = await fetch(`http://localhost:8081/${searchSong}`);
-    console.log(response);
-    setSongs(response);
+const callApiAsync = async (searchSong, setAutocompleteSongs) => {
+    const response = await fetch(`http://localhost:8081/${searchSong}`).then(res => res.json());
+    console.log(response.songs);
+    setAutocompleteSongs(response.songs);
 }
 
 const App = () => {
-    const [songs, setSongs] = useState([])
-
     const [searchSong, setSearchSong] = useState('')
-    const [autocompleteSongs, setAutocompleteSongs] = useState(songs)
+    const [autocompleteSongs, setAutocompleteSongs] = useState([])
     const [selectedSongs, setSelectedSongs] = useState([])
 
     useEffect(() => {
-        callApiAsync(searchSong, setSongs).then();
+        callApiAsync(searchSong, setAutocompleteSongs);
     }, [searchSong])
 
     const handleSearchInputChange = (e) => {
         setSearchSong(e.target.value)
-        setAutocompleteSongs(songs.filter(s =>
-            s.name.toLowerCase().includes(e.target.value.toLowerCase())
-        ))
     }
 
     const handleSelectedSong = (selectedSong) => {
@@ -33,7 +27,6 @@ const App = () => {
             name: s.name,
             isSelected: selectedSong.name === s.name ? !s.isSelected : s.isSelected
         }))
-
         setAutocompleteSongs(autocompleteSongsUpdated)
         setSelectedSongs(autocompleteSongsUpdated.filter(s => s.isSelected))
     }
