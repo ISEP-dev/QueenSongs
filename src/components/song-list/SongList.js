@@ -25,4 +25,9 @@ const SongList = ({selectedSongs, handleSelectedSong}) => (
         </ul>
 )
 
+SongList.propTypes = {
+    selectedSongs: PropTypes.array.isRequired,
+    handleSelectedSong: PropTypes.func.isRequired
+}
+
 export default SongList;

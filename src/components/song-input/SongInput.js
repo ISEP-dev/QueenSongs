@@ -1,5 +1,6 @@
 import React from 'react';
 import './songinput.css';
+import PropTypes from 'prop-types'
 
 const SongInput = (props) => (
     <span className="search-input-container">
@@ -30,5 +31,12 @@ const SongInput = (props) => (
         </ul>
     </span>
 )
+
+SongInput.propTypes = {
+    searchSong: PropTypes.string.isRequired,
+    handleSearchInputChange: PropTypes.func.isRequired,
+    autocompleteSongs: PropTypes.array.isRequired,
+    handleSelectedSong: PropTypes.func.isRequired
+}
 
 export default SongInput;
