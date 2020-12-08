@@ -1,0 +1,9 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-card {
+    min-width: 30rem;
+}

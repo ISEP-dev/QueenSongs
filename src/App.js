@@ -2,6 +2,12 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
+import {Button} from "@material-ui/core";
+import Modal from "@material-ui/core/Modal";
+import CardContent from "@material-ui/core/CardContent";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+import SongSelectedModal from "./components/song-selected-modal";
 
 const callApiAsync = async (searchSong, setSongsFound) => {
     try {
@@ -21,6 +27,7 @@ const App = () => {
     const [searchSong, setSearchSong] = useState('')
     const [autocompleteSongs, setAutocompleteSongs] = useState([])
     const [selectedSongs, setSelectedSongs] = useState([])
+    const [isOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
         if (!!searchSong) {
@@ -57,9 +64,8 @@ const App = () => {
                 <SongList selectedSongs={selectedSongs}
                           handleSelectedSong={handleSelectedSong}/>
 
-                <button className="validate-button" type="button"
-                        onClick={() => alert(selectedSongs.map(s => s.name).join(', \n'))}>Valider
-                </button>
+                <Button variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
+                <SongSelectedModal isOpen={isOpen} handleClose={() => setModalOpen(false)} selectedSongs={selectedSongs}/>
             </div>
         </div>
     )
