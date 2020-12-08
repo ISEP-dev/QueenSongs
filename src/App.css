@@ -4,23 +4,6 @@
     margin: auto;
 }
 
-.validate-button {
-    padding: .5rem;
-    background: none;
-    border: .10rem solid coral;
-    width: 7rem;
-    border-radius: 4px;
-    color: coral;
-    margin-top: 1rem;
-    float: right;
-}
-
-.validate-button:hover {
-    background: coral;
-    color: white;
-    cursor: pointer;
-}
-
 .header {
     text-align: center;
     font-size: 2rem;
