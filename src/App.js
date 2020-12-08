@@ -3,27 +3,22 @@ import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
 import {Button} from "@material-ui/core";
-import Modal from "@material-ui/core/Modal";
-import CardContent from "@material-ui/core/CardContent";
-import Card from "@material-ui/core/Card";
-import Typography from "@material-ui/core/Typography";
 import SongSelectedModal from "./components/song-selected-modal";
 
-const callApiAsync = async (searchSong, setSongsFound) => {
+const callApiAsync = async (searchSong, setAutocompleteSongs) => {
     try {
         const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => {
             if (res.ok) return res.json();
             throw new Error(res.status.toString());
         });
 
-        setSongsFound(songs);
+        setAutocompleteSongs(songs);
     } catch (e) {
         alert(e);
     }
 }
 
 const App = () => {
-    const [songsFound, setSongsFound] = useState([]);
     const [searchSong, setSearchSong] = useState('')
     const [autocompleteSongs, setAutocompleteSongs] = useState([])
     const [selectedSongs, setSelectedSongs] = useState([])
@@ -31,27 +26,12 @@ const App = () => {
 
     useEffect(() => {
         if (!!searchSong) {
-            callApiAsync(searchSong, setSongsFound);
+            callApiAsync(searchSong, setAutocompleteSongs);
         }
     }, [searchSong])
 
-    useEffect(() => {
-        setAutocompleteSongs(songsFound.map(song => ({
-            name: song,
-            isSelected: !!selectedSongs.find(s => s.name === song)
-        })));
-    }, [songsFound, selectedSongs])
-
-    const handleSearchInputChange = (e) => setSearchSong(e.target.value)
-
-    const handleSelectedSong = (songSelected) => {
-        const isAlreadySelected = !!selectedSongs.find(s => s.name === songSelected.name);
-        const songSelectedToUpdate = isAlreadySelected
-            ? selectedSongs.filter(s => s.name !== songSelected.name)
-            : [songSelected, ...selectedSongs];
-
-        setSelectedSongs(songSelectedToUpdate);
-    }
+    const handleSearchInputChange = (e) => setSearchSong(e.currentTarget.value)
+    const handleSelectedSongs = (songsSelected) => setSelectedSongs(songsSelected)
 
     return (
         <div>
@@ -60,9 +40,8 @@ const App = () => {
                 <SongInput searchSong={searchSong}
                            autocompleteSongs={autocompleteSongs}
                            handleSearchInputChange={handleSearchInputChange}
-                           handleSelectedSong={handleSelectedSong}/>
-                <SongList selectedSongs={selectedSongs}
-                          handleSelectedSong={handleSelectedSong}/>
+                           handleSelectedSong={handleSelectedSongs} songsSelected={selectedSongs}/>
+                <SongList selectedSongs={selectedSongs} handleSelectedSong={handleSelectedSongs}/>
 
                 <Button variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
                 <SongSelectedModal isOpen={isOpen} handleClose={() => setModalOpen(false)} selectedSongs={selectedSongs}/>

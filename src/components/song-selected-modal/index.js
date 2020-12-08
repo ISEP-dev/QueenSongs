@@ -20,9 +20,7 @@ const SongSelectedModal = ({selectedSongs, isOpen, handleClose}) => {
                     <Typography variant="body2" component="p">
                         <List component="nav" aria-label="main mailbox folders">
                             {!!selectedSongs && selectedSongs.map(((s, i) => (
-                                <ListItem key={i}>
-                                    <ListItemText>s.name</ListItemText>
-                                </ListItem>
+                                <ListItem key={i}><ListItemText>{s}</ListItemText></ListItem>
                             )))}
                         </List>
                     </Typography>

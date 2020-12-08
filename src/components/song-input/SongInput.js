@@ -1,42 +1,50 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './songinput.css';
 import PropTypes from 'prop-types'
+import Checkbox from "@material-ui/core/Checkbox";
+import TextField from "@material-ui/core/TextField";
+import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
-const SongInput = (props) => (
-    <span className="search-input-container">
-        <input className="search-input"
-               type="text"
-               value={props.searchSong}
-               placeholder="Search your song"
-               onChange={props.handleSearchInputChange}/>
-               <img className="search-input-img"
-                    src="https://images-ext-2.discordapp.net/external/qFaWG6UrIhj7WCGEmR7kZBcBeVfJFUIFtLqgmN-QwB0/%3Fitemid%3D15056195%2522/https/media1.tenor.com/images/15f209bdae6da376665c3a1b2cb781ea/tenor.gif"
-                    alt="icon-loop"/>
-        <ul className="search-input-list">
-            {
-                !!props.autocompleteSongs.length
-                    ? (
-                        props.autocompleteSongs.map((s, i) =>
-                            <li className="search-input-list-item"
-                                key={i}
-                                onClick={() => props.handleSelectedSong(s)}>
-                                <input type="checkbox" id={`checkbox-song-${i}`}
-                                       checked={s.isSelected} readOnly/>
-                                {s.name}
-                            </li>
-                        )
-                    )
-                    : <div className="empty-state-input">No song found</div>
-            }
-        </ul>
-    </span>
-)
+const SongInput = (props) => {
+    return (
+        <Autocomplete multiple
+                      className="autocomplete-container"
+                      id="checkboxes-tags-demo"
+                      onChange={(e, n) => props.handleSelectedSong(n)}
+                      options={props.autocompleteSongs}
+                      disableCloseOnSelect
+                      getOptionLabel={(option) => option}
+                      renderTags={_ => <span className="autocomplete-container-input">{props.songsSelected.join(', ')}</span>}
+                      renderOption={(option, {selected}) => (
+                          <React.Fragment>
+                              <Checkbox icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
+                                        checkedIcon={<CheckBoxIcon fontSize="small"/>}
+                                        style={{marginRight: 8}}
+                                        checked={props.songsSelected.includes(option)}
+                                        readOnly
+                              />
+                              {option}
+                          </React.Fragment>
+                      )}
+                      renderInput={(params) => (
+                          <TextField {...params}
+                                     variant="outlined"
+                                     label="Songs"
+                                     placeholder="Please search a song..."
+                                     onChange={props.handleSearchInputChange}/>
+                      )}
+        />
+    )
+}
 
 SongInput.propTypes = {
     searchSong: PropTypes.string.isRequired,
     handleSearchInputChange: PropTypes.func.isRequired,
     autocompleteSongs: PropTypes.array.isRequired,
-    handleSelectedSong: PropTypes.func.isRequired
+    handleSelectedSong: PropTypes.func.isRequired,
+    songsSelected: PropTypes.array.isRequired,
 }
 
 export default SongInput;
