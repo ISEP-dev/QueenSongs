@@ -38,19 +38,13 @@ const App = () => {
     useEffect(() => {
         setAutocompleteSongs(songsFound.map(song => ({
             name: song,
-            isSelected: !!selectedSongs.find(s => s.name === song)
         })));
-    }, [songsFound, selectedSongs])
+    }, [songsFound])
 
-    const handleSearchInputChange = (e) => setSearchSong(e.target.value)
+    const handleSearchInputChange = (e) => setSearchSong(e.currentTarget.value)
 
-    const handleSelectedSong = (songSelected) => {
-        const isAlreadySelected = !!selectedSongs.find(s => s.name === songSelected.name);
-        const songSelectedToUpdate = isAlreadySelected
-            ? selectedSongs.filter(s => s.name !== songSelected.name)
-            : [songSelected, ...selectedSongs];
-
-        setSelectedSongs(songSelectedToUpdate);
+    const handleSelectedSongs = (songsSelected) => {
+        setSelectedSongs(songsSelected);
     }
 
     return (
@@ -60,9 +54,9 @@ const App = () => {
                 <SongInput searchSong={searchSong}
                            autocompleteSongs={autocompleteSongs}
                            handleSearchInputChange={handleSearchInputChange}
-                           handleSelectedSong={handleSelectedSong}/>
+                           handleSelectedSong={handleSelectedSongs}/>
                 <SongList selectedSongs={selectedSongs}
-                          handleSelectedSong={handleSelectedSong}/>
+                          handleSelectedSong={handleSelectedSongs}/>
 
                 <Button variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
                 <SongSelectedModal isOpen={isOpen} handleClose={() => setModalOpen(false)} selectedSongs={selectedSongs}/>
