@@ -7,7 +7,6 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
-
 const SongInput = (props) => {
     return (
         <Autocomplete multiple
@@ -16,18 +15,17 @@ const SongInput = (props) => {
                       onChange={(e, n) => props.handleSelectedSong(n)}
                       options={props.autocompleteSongs}
                       disableCloseOnSelect
-                      getOptionLabel={(option) => option.name}
-                      renderTags={songs =>
-                          <span className="autocomplete-container-input">{songs.map(s => s.name).join(', ')}</span>
-                      }
+                      getOptionLabel={(option) => option}
+                      renderTags={_ => <span className="autocomplete-container-input">{props.songsSelected.join(', ')}</span>}
                       renderOption={(option, {selected}) => (
                           <React.Fragment>
                               <Checkbox icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
                                         checkedIcon={<CheckBoxIcon fontSize="small"/>}
                                         style={{marginRight: 8}}
-                                        checked={selected}
+                                        checked={props.songsSelected.includes(option)}
+                                        readOnly
                               />
-                              {option.name}
+                              {option}
                           </React.Fragment>
                       )}
                       renderInput={(params) => (
@@ -45,7 +43,8 @@ SongInput.propTypes = {
     searchSong: PropTypes.string.isRequired,
     handleSearchInputChange: PropTypes.func.isRequired,
     autocompleteSongs: PropTypes.array.isRequired,
-    handleSelectedSong: PropTypes.func.isRequired
+    handleSelectedSong: PropTypes.func.isRequired,
+    songsSelected: PropTypes.array.isRequired,
 }
 
 export default SongInput;
