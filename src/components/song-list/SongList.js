@@ -1,6 +1,8 @@
 import React from 'react';
 import './songlist.css';
 import PropTypes from 'prop-types'
+import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core"
+import CloseIcon from '@material-ui/icons/Close'
 
 const SongList = ({selectedSongs, handleSelectedSong}) => (
     !selectedSongs.length
@@ -10,20 +12,20 @@ const SongList = ({selectedSongs, handleSelectedSong}) => (
                 alt="empty"/>
             <div className="empty-state-text">No song selected</div>
         </div>
-        : <ul className="song-list">
+        : <List overflow="auto" height="75%" title={"List of Songs"}>
             {
                 selectedSongs.map((songSelected, i) => (
-                    <li className="song-list-item"
-                        key={i}>
-                        {songSelected.name}
-                        <button type="button"
-                                onClick={() => handleSelectedSong(songSelected)}>
-                            &times;
-                        </button>
-                    </li>
+                    <ListItem display="flex" alignItems="center" key={i} button>
+                        <ListItemText primary={songSelected.name}/>
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" onClick={() => handleSelectedSong(songSelected)} title={"closeButton"}>
+                                <CloseIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
                 ))
             }
-        </ul>
+        </List>
 )
 
 SongList.propTypes = {
