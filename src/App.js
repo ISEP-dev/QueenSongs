@@ -37,8 +37,7 @@ const App = () => {
         <Container className="container">
             <h1 className="title">Queen songs TP</h1>
             <div className="card">
-                <SongInput searchSong={searchSong}
-                           autocompleteSongs={autocompleteSongs}
+                <SongInput autocompleteSongs={autocompleteSongs}
                            handleSearchInputChange={handleSearchInputChange}
                            handleSelectedSong={handleSelectedSongs} songsSelected={selectedSongs}/>
                 <SongList selectedSongs={selectedSongs} handleSelectedSong={handleSelectedSongs}/>
