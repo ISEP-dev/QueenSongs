@@ -4,19 +4,7 @@ import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
 import {Button, Container} from "@material-ui/core";
 import SongSelectedModal from "./components/song-selected-modal";
-
-const callApiAsync = async (searchSong, setAutocompleteSongs) => {
-    try {
-        const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => {
-            if (res.ok) return res.json();
-            throw new Error(res.status.toString());
-        });
-
-        setAutocompleteSongs(songs);
-    } catch (e) {
-        alert(e);
-    }
-}
+import {getSongs} from "./song.service";
 
 const App = () => {
     const [searchSong, setSearchSong] = useState('')
@@ -25,8 +13,8 @@ const App = () => {
     const [isOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        if (!!searchSong) {
-            callApiAsync(searchSong, setAutocompleteSongs);
+        if (searchSong) {
+            getSongs(searchSong, setAutocompleteSongs);
         }
     }, [searchSong])
 
