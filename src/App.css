@@ -1,14 +1,9 @@
-:host { width: 100%; }
+.title { color: cornflowerblue; }
 .card {
-    width: fit-content;
+    width: 100%;
+    height: 100%;
+    min-width: 20rem;
     margin: auto;
 }
 
-.header {
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 600;
-    color: coral;
-    margin: 1rem 0 1rem 0;
-    width: 100%;
-}
+.modal-button { float: right; }

@@ -4,6 +4,17 @@
     justify-content: center;
 }
 
+.close-icon {
+    float: right;
+    cursor: pointer;
+}
+
 .modal-card {
     min-width: 30rem;
+    height: 20rem;
 }
+
+.height-list {
+    height: 10rem;
+}
+.modal-card h2 { color: cornflowerblue; }

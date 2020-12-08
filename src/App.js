@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './App.css';
 import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
-import {Button} from "@material-ui/core";
+import {Button, Container} from "@material-ui/core";
 import SongSelectedModal from "./components/song-selected-modal";
 
 const callApiAsync = async (searchSong, setAutocompleteSongs) => {
@@ -34,8 +34,8 @@ const App = () => {
     const handleSelectedSongs = (songsSelected) => setSelectedSongs(songsSelected)
 
     return (
-        <div>
-            <div className="header">Queen songs TP</div>
+        <Container className="container">
+            <h1 className="title">Queen songs TP</h1>
             <div className="card">
                 <SongInput searchSong={searchSong}
                            autocompleteSongs={autocompleteSongs}
@@ -43,10 +43,10 @@ const App = () => {
                            handleSelectedSong={handleSelectedSongs} songsSelected={selectedSongs}/>
                 <SongList selectedSongs={selectedSongs} handleSelectedSong={handleSelectedSongs}/>
 
-                <Button variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
+                <Button className="modal-button" variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
                 <SongSelectedModal isOpen={isOpen} handleClose={() => setModalOpen(false)} selectedSongs={selectedSongs}/>
             </div>
-        </div>
+        </Container>
     )
 }
 

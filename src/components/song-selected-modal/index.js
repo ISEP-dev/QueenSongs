@@ -8,6 +8,7 @@ import './index.css';
 import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
+import CloseIcon from '@material-ui/icons/Close';
 
 const SongSelectedModal = ({selectedSongs, isOpen, handleClose}) => {
     return (
@@ -15,13 +16,18 @@ const SongSelectedModal = ({selectedSongs, isOpen, handleClose}) => {
             onClose={handleClose}
             className='modal'>
             <Card className='modal-card'>
+                <CloseIcon className="close-icon" onClick={handleClose}/>
                 <CardContent>
-                    <Typography variant="h5" component="h2">Songs selected</Typography>
+                    <h2>Songs selected</h2>
                     <Typography variant="body2" component="p">
-                        <List component="nav" aria-label="main mailbox folders">
-                            {!!selectedSongs && selectedSongs.map(((s, i) => (
-                                <ListItem key={i}><ListItemText>{s}</ListItemText></ListItem>
-                            )))}
+                        <List className="list-container height-list" component="nav" aria-label="main mailbox folders">
+                            {
+                                selectedSongs.length
+                                    ? selectedSongs.map(((s, i) => (
+                                            <ListItem key={i}><ListItemText>{s}</ListItemText></ListItem>
+                                        )))
+                                    : <div className="empty-state">No selected song</div>
+                            }
                         </List>
                     </Typography>
                 </CardContent>

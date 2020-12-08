@@ -11,10 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+#root { width: 100%; }
 
-body {
-  height: 100vh;
+/* Common css */
+.empty-state {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: calc(100% - 1rem);
+  width: calc(100% - 1rem);
+  background-color: #eaf1fb;
+  margin: .5rem;
+  border-radius: 4px;
+}
+
+.list-container {
+  overflow: auto;
 }
