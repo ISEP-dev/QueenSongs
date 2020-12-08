@@ -16,13 +16,13 @@ const SongInput = (props) => {
                       options={props.autocompleteSongs}
                       disableCloseOnSelect
                       getOptionLabel={(option) => option}
-                      renderTags={_ => <span className="autocomplete-container-input">{props.songsSelected.join(', ')}</span>}
+                      renderTags={_ => <span className="autocomplete-container-input">{props.selectedSongs.join(', ')}</span>}
                       renderOption={(option) => (
                           <React.Fragment>
                               <Checkbox icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
                                         checkedIcon={<CheckBoxIcon fontSize="small"/>}
                                         style={{marginRight: 8}}
-                                        checked={props.songsSelected.includes(option)}
+                                        checked={props.selectedSongs.includes(option)}
                                         readOnly
                               />
                               {option}
@@ -43,7 +43,7 @@ SongInput.propTypes = {
     handleSearchInputChange: PropTypes.func.isRequired,
     autocompleteSongs: PropTypes.array.isRequired,
     handleSelectedSong: PropTypes.func.isRequired,
-    songsSelected: PropTypes.array.isRequired,
+    selectedSongs: PropTypes.array.isRequired,
 }
 
 export default SongInput;

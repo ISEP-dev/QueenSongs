@@ -27,7 +27,7 @@ const App = () => {
             <div className="card">
                 <SongInput autocompleteSongs={autocompleteSongs}
                            handleSearchInputChange={handleSearchInputChange}
-                           handleSelectedSong={handleSelectedSongs} songsSelected={selectedSongs}/>
+                           handleSelectedSong={handleSelectedSongs} selectedSongs={selectedSongs}/>
                 <SongList selectedSongs={selectedSongs} handleSelectedSong={handleSelectedSongs}/>
 
                 <Button className="modal-button" variant="outlined" color="primary" onClick={() => setModalOpen(true)}>Valider</Button>
