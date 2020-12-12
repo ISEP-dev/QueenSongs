@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './songinput.css';
 import PropTypes from 'prop-types'
 import Checkbox from "@material-ui/core/Checkbox";
