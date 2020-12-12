@@ -22,7 +22,7 @@ const SongList = ({selectedSongs, handleSelectedSong}) => {
                             </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>
-                )) : <div className="empty-state">No song selected</div>
+                )) : <div className="empty-state" title="noSongsSelected">No song selected</div>
             }
         </List>
     )
