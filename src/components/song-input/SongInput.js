@@ -8,11 +8,13 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const SongInput = (props) => {
+    const handleChange = (e, values) => props.handleSelectedSong(values);
     return (
         <Autocomplete multiple
                       className="autocomplete-container"
+                      data-testid="autocomplete"
                       id="checkboxes-tags-demo"
-                      onChange={(e, n) => props.handleSelectedSong(n)}
+                      onChange={handleChange}
                       options={props.autocompleteSongs}
                       disableCloseOnSelect
                       getOptionLabel={(option) => option}
@@ -22,6 +24,7 @@ const SongInput = (props) => {
                               <Checkbox icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
                                         checkedIcon={<CheckBoxIcon fontSize="small"/>}
                                         style={{marginRight: 8}}
+                                        title="autocomplete-checkbox"
                                         checked={props.selectedSongs.includes(option)}
                                         readOnly
                               />
