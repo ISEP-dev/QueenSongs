@@ -7,7 +7,7 @@ const mockHandleSelectedSong = jest.fn()
 const mockHandleSearchInputChange = jest.fn()
 
 describe("SongInput Tests", () => {
-    it("Handle search input", () => {
+    it("Test search input", () => {
         const componentRendered = render(
             <SongInput selectedSongs={mockSelectedSongs}
                        autocompleteSongs={mockAutocompleteSongs}
