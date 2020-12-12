@@ -15,7 +15,7 @@ const SongList = ({selectedSongs, handleSelectedSong}) => {
             {
                 selectedSongs.length ? selectedSongs.map((songSelected) => (
                     <ListItem display="flex" alignItems="center" key={songSelected}>
-                        <ListItemText primary={songSelected}/>
+                        <ListItemText title="list-item-text" primary={songSelected}/>
                         <ListItemSecondaryAction>
                             <IconButton edge="end" onClick={() => handleRemove(songSelected)} title={"closeButton"}>
                                 <CloseIcon />
