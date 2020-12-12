@@ -110,4 +110,24 @@ describe("SongInput Tests", () => {
         expect(mockHandleSelectedSong).toHaveBeenCalledTimes(2)
         expect(mockHandleSelectedSong).toHaveBeenCalledWith([])
     })
+
+    it ("Test autocomplete songs", async () => {
+        const expectedAutocompleteSongs = [...mockAutocompleteSongs, "Song42"];
+
+        const componentRendered = render(
+            <SongInput selectedSongs={mockSelectedSongs}
+                       autocompleteSongs={expectedAutocompleteSongs}
+                       handleSearchInputChange={mockHandleSearchInputChange}
+                       handleSelectedSong={mockHandleSelectedSong}/>
+        )
+
+        const textFieldInput = componentRendered.getByPlaceholderText("Please search a song...");
+        fireEvent.change(textFieldInput, {target: { value: "Song"}});
+        fireEvent.focus(textFieldInput);
+
+        const listOfOptions = componentRendered.getAllByRole("option")
+        const listOfOptionsValues = listOfOptions.map(l => l.textContent)
+
+        expect(listOfOptionsValues).toStrictEqual(expectedAutocompleteSongs)
+    })
 })
