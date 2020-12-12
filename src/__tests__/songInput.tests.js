@@ -19,7 +19,9 @@ describe("SongInput Tests", () => {
         const textFieldElement = { target: { value: "TautoSong" }};
         fireEvent.change(textField, textFieldElement);
 
+        expect(textField).toHaveTextContent(/^$/);
         expect(mockHandleSearchInputChange).toHaveBeenCalledTimes(1);
+        expect(mockHandleSearchInputChange).toHaveBeenCalledWith("TautoSong");
     })
 
     it("Handle songs selected", async () => {

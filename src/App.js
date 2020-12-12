@@ -18,7 +18,7 @@ const App = () => {
         }
     }, [searchSong])
 
-    const handleSearchInputChange = (e) => setSearchSong(e.currentTarget.value)
+    const handleSearchInputChange = (searchSong) => setSearchSong(searchSong)
     const handleSelectedSongs = (songsSelected) => setSelectedSongs(songsSelected)
 
     return (
