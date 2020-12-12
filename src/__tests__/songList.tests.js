@@ -16,7 +16,20 @@ describe("SongList Tests", () => {
 
         expect(mockSelectedSong).toContain("First Song")
         expect(mockHandleSelectedSong).toHaveBeenCalledTimes(1)
-        expect(mockHandleSelectedSong).toHaveBeenCalledWith(mockSelectedSong[firstElement])
+        expect(mockHandleSelectedSong).toHaveBeenCalledWith(mockSelectedSong.filter(s => s !== mockSelectedSong[firstElement]))
+    })
+
+    it("Test no selectedSongs", () => {
+        const mockSelectedSong = []
+        const mockHandleSelectedSong = jest.fn()
+
+        const componentRendered = render(<SongList selectedSongs={mockSelectedSong} handleSelectedSong={mockHandleSelectedSong}/>)
+
+        const divNoSong = componentRendered.getByTitle('noSongsSelected')
+
+        expect(mockSelectedSong).toEqual([])
+        expect(mockHandleSelectedSong).not.toHaveBeenCalled()
+        expect(divNoSong.textContent).toBe("No song selected")
 
     })
 })
