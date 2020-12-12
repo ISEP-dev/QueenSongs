@@ -4,7 +4,7 @@ import SongInput from "./components/song-input/SongInput";
 import SongList from "./components/song-list/SongList";
 import {Button, Container} from "@material-ui/core";
 import SongSelectedModal from "./components/song-selected-modal";
-import {getSongs} from "./song.service";
+import {getSongsAsync} from "./song.service";
 
 const App = () => {
     const [searchSong, setSearchSong] = useState('')
@@ -14,11 +14,11 @@ const App = () => {
 
     useEffect(() => {
         if (searchSong) {
-            getSongs(searchSong, setAutocompleteSongs);
+            getSongsAsync(searchSong, setAutocompleteSongs);
         }
     }, [searchSong])
 
-    const handleSearchInputChange = (e) => setSearchSong(e.currentTarget.value)
+    const handleSearchInputChange = (searchSong) => setSearchSong(searchSong)
     const handleSelectedSongs = (songsSelected) => setSelectedSongs(songsSelected)
 
     return (

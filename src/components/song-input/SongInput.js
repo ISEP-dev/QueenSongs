@@ -9,6 +9,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 
 const SongInput = (props) => {
     const handleChange = (e, values) => props.handleSelectedSong(values);
+    const handleSearchChange = (e) => props.handleSearchInputChange(e.currentTarget.value);
+
     return (
         <Autocomplete multiple
                       className="autocomplete-container"
@@ -36,7 +38,7 @@ const SongInput = (props) => {
                                      variant="outlined"
                                      label="Songs"
                                      placeholder="Please search a song..."
-                                     onChange={props.handleSearchInputChange}/>
+                                     onChange={handleSearchChange}/>
                       )}
         />
     )

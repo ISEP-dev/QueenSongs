@@ -13,9 +13,9 @@ const SongList = ({selectedSongs, handleSelectedSong}) => {
     return (
         <List className="list-container max-height-list" title={"List of Songs"}>
             {
-                selectedSongs.length ? selectedSongs.map((songSelected, i) => (
-                    <ListItem display="flex" alignItems="center" key={i}>
-                        <ListItemText primary={songSelected}/>
+                selectedSongs.length ? selectedSongs.map((songSelected) => (
+                    <ListItem display="flex" alignItems="center" key={songSelected}>
+                        <ListItemText title="list-item-text" primary={songSelected}/>
                         <ListItemSecondaryAction>
                             <IconButton edge="end" onClick={() => handleRemove(songSelected)} title={"closeButton"}>
                                 <CloseIcon />
