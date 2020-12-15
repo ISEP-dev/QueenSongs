@@ -1,1 +1,0 @@
-/* All methods to use in reducer to update your data */
