@@ -1,12 +1,13 @@
-export const getSongsAsync = async (searchSong, setAutocompleteSongs) => {
+export const getSongsAsync = async (searchSong) => {
     try {
         const {songs} = await fetch(`http://localhost:8081/${searchSong}`).then(res => {
             if (res.ok) return res.json();
             throw new Error(res.status.toString());
         });
 
-        setAutocompleteSongs(songs);
+        return songs;
     } catch (e) {
         alert(e);
+        return [];
     }
 }
