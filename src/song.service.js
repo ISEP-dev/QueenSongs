@@ -7,7 +7,6 @@ export const getSongsAsync = async (searchSong) => {
 
         return songs;
     } catch (e) {
-        alert(e);
         return [];
     }
 }
