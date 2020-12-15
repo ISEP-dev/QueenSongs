@@ -34,6 +34,7 @@ const SongInput = (props) => {
                       onChange={handleChange}
                       options={props.autocompleteSongs}
                       disableCloseOnSelect
+                      getOptionSelected={(option, value) => option === value && props.selectedSongs.includes(option)}
                       getOptionLabel={(option) => option}
                       renderTags={_ => <span className="autocomplete-container-input">{props.selectedSongs.join(', ')}</span>}
                       renderOption={(option, {selected}) => (
