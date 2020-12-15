@@ -8,6 +8,7 @@ import {connect} from "react-redux";
 
 const SongList = ({selectedSongs, handleSelectedSong}) => {
     const handleRemove = (songSelected) => {
+        console.log("HANDLE REMOVE ")
         const selectedSongsUpdate = selectedSongs.filter(s => s !== songSelected);
         handleSelectedSong(selectedSongsUpdate);
     }

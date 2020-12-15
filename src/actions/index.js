@@ -9,10 +9,13 @@ export const updateAutocompleteSongs = async (dispatch, searchValue) => {
     dispatch({type: UPDATE_AUTOCOMPLETE_SONGS, payload: response})
 }
 
-export const updateSelectedSongs = selectedSongs => ({
-    type: UPDATE_SELECTED_SONGS,
-    payload: selectedSongs
-});
+export const updateSelectedSongs = selectedSongs => {
+    console.log("HANDLE CHANGE: " + selectedSongs)
+    return ({
+        type: UPDATE_SELECTED_SONGS,
+        payload: selectedSongs
+    });
+};
 
 export const updateModal = isOpen => ({
     type: UPDATE_MODAL,

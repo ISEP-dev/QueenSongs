@@ -10,7 +10,20 @@ import {connect} from "react-redux";
 import {updateAutocompleteSongs, updateSelectedSongs} from "../../actions";
 
 const SongInput = (props) => {
-    const handleChange = (e, values) => props.handleSelectedSong(values);
+    const handleChange = (e, values, reason) => {
+        if (reason === "clear") {
+            props.handleSelectedSong([])
+            return;
+        }
+
+        const selectedSong = e.currentTarget.innerText;
+        const isAlreadySelected = props.selectedSongs.includes(selectedSong);
+        const selectedSongsUpdated = isAlreadySelected
+            ? props.selectedSongs.filter(s => s !== selectedSong)
+            : [...props.selectedSongs, selectedSong];
+        props.handleSelectedSong(selectedSongsUpdated)
+    }
+
     const handleSearchChange = (e) => props.handleSearchInputChange(e.currentTarget.value);
 
     return (
@@ -23,13 +36,13 @@ const SongInput = (props) => {
                       disableCloseOnSelect
                       getOptionLabel={(option) => option}
                       renderTags={_ => <span className="autocomplete-container-input">{props.selectedSongs.join(', ')}</span>}
-                      renderOption={(option) => (
+                      renderOption={(option, {selected}) => (
                           <React.Fragment>
                               <Checkbox icon={<CheckBoxOutlineBlankIcon fontSize="small"/>}
                                         checkedIcon={<CheckBoxIcon fontSize="small"/>}
                                         style={{marginRight: 8}}
                                         title="autocomplete-checkbox"
-                                        checked={props.selectedSongs.includes(option)}
+                                        checked={selected}
                                         readOnly
                               />
                               {option}
@@ -58,7 +71,7 @@ const mapStateToProps = state => ({
     selectedSongs: state.selectedSongs,
 })
 const mapDispatchToProps = dispatch => ({
-    handleSearchInputChange: searchValue  => updateAutocompleteSongs(dispatch, searchValue),
+    handleSearchInputChange: searchValue => updateAutocompleteSongs(dispatch, searchValue),
     handleSelectedSong: selectedSongs => dispatch(updateSelectedSongs(selectedSongs)),
 })
 
