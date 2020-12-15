@@ -10,7 +10,6 @@ export const updateAutocompleteSongs = async (dispatch, searchValue) => {
 }
 
 export const updateSelectedSongs = selectedSongs => {
-    console.log("HANDLE CHANGE: " + selectedSongs)
     return ({
         type: UPDATE_SELECTED_SONGS,
         payload: selectedSongs
