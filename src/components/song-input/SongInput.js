@@ -6,6 +6,8 @@ import TextField from "@material-ui/core/TextField";
 import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import {connect} from "react-redux";
+import {updateAutocompleteSongs, updateSelectedSongs} from "../../actions";
 
 const SongInput = (props) => {
     const handleChange = (e, values) => props.handleSelectedSong(values);
@@ -51,4 +53,13 @@ SongInput.propTypes = {
     selectedSongs: PropTypes.array.isRequired,
 }
 
-export default SongInput;
+const mapStateToProps = state => ({
+    autocompleteSongs: state.autocompleteSongs,
+    selectedSongs: state.selectedSongs,
+})
+const mapDispatchToProps = dispatch => ({
+    handleSearchInputChange: searchValue  => updateAutocompleteSongs(dispatch, searchValue),
+    handleSelectedSong: selectedSongs => dispatch(updateSelectedSongs(selectedSongs)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongInput);

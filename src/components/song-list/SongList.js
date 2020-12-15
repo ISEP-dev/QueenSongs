@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import {IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from "@material-ui/core"
 import CloseIcon from '@material-ui/icons/Close'
 import './songList.css'
+import {updateSelectedSongs} from "../../actions";
+import {connect} from "react-redux";
 
 const SongList = ({selectedSongs, handleSelectedSong}) => {
     const handleRemove = (songSelected) => {
@@ -33,4 +35,10 @@ SongList.propTypes = {
     handleSelectedSong: PropTypes.func.isRequired
 }
 
-export default SongList;
+const mapStateToProps = state => ({
+    selectedSongs: state.selectedSongs,
+})
+const mapDispatchToProps = dispatch => ({
+    handleSelectedSong: selectedSongs => dispatch(updateSelectedSongs(selectedSongs)),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(SongList);

@@ -9,37 +9,56 @@ import List from "@material-ui/core/List";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItem from "@material-ui/core/ListItem";
 import CloseIcon from '@material-ui/icons/Close';
+import {updateModal} from "../../actions";
+import {connect} from "react-redux";
+import {Button} from "@material-ui/core";
 
-const SongSelectedModal = ({selectedSongs, isOpen, handleClose}) => {
+const SongSelectedModal = ({selectedSongs, isOpen, toggleModalDisplayed}) => {
     return (
-        <Modal open={isOpen}
-            onClose={handleClose}
-            className='modal'>
-            <Card className='modal-card'>
-                <CloseIcon className="close-icon" onClick={handleClose}/>
-                <CardContent>
-                    <h2>Songs selected</h2>
-                    <Typography variant="body2" component="p">
-                        <List className="list-container height-list" component="nav" aria-label="main mailbox folders">
-                            {
-                                selectedSongs.length
-                                    ? selectedSongs.map(((s, i) => (
+        <div>
+            <Button className="modal-button"
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => toggleModalDisplayed(!isOpen)}>
+                Valider
+            </Button>
+            <Modal open={isOpen}
+                   onClose={() => toggleModalDisplayed(false)}
+                   className='modal'>
+                <Card className='modal-card'>
+                    <CloseIcon className="close-icon" onClick={() => toggleModalDisplayed(false)}/>
+                    <CardContent>
+                        <h2>Songs selected</h2>
+                        <Typography variant="body2" component="span">
+                            <List className="list-container height-list" component="nav" aria-label="main mailbox folders">
+                                {
+                                    selectedSongs.length
+                                        ? selectedSongs.map(((s, i) => (
                                             <ListItem key={i}><ListItemText>{s}</ListItemText></ListItem>
                                         )))
-                                    : <div className="empty-state">No selected song</div>
-                            }
-                        </List>
-                    </Typography>
-                </CardContent>
-            </Card>
-        </Modal>
+                                        : <div className="empty-state">No selected song</div>
+                                }
+                            </List>
+                        </Typography>
+                    </CardContent>
+                </Card>
+            </Modal>
+        </div>
     );
 }
-
-export default SongSelectedModal;
 
 SongSelectedModal.propTypes = {
     selectedSongs: PropTypes.array.isRequired,
     isOpen: PropTypes.bool.isRequired,
-    handleClose: PropTypes.func.isRequired
+    toggleModalDisplayed: PropTypes.func.isRequired
 }
+
+const mapStateToProps = state => ({
+    isOpen: state.isOpen,
+    selectedSongs: state.selectedSongs
+})
+const mapDispatchToProps = dispatch => ({
+    toggleModalDisplayed: isOpen => dispatch(updateModal(isOpen))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SongSelectedModal);
